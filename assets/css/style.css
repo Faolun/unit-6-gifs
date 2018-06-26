@@ -1,0 +1,22 @@
+body{
+	color: black;
+}
+* {
+	box-sizing: border-box;
+}
+/* img { 
+    height: 150px;
+    width: 150px;
+} */
+.btn {
+    /* adding spacing between each button*/
+    margin: 5px;
+    background-color: #999999;
+    border-color: #fff;
+}
+.gifDiv{
+    float: left;
+    margin: 5px;
+    margin: 3px;
+}
+
