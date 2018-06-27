@@ -23,6 +23,7 @@ $( document ).ready(function() {
           return false; // no blank buttons
         }
         topics.push(reaction);
+        $("#reaction-input").val("");
     
         disButtons();
         return false;
@@ -62,7 +63,7 @@ $( document ).ready(function() {
                 gifDiv.append(gifRating);
                 //link adds button
                 var gifLink = $("<button>").html("Copy Link");               
-                gifLink.addClass("link-button");
+                gifLink.addClass("link-button btn btn-primary");
                 gifLink.attr("onclick", "copyToClipboard('#bitAdd"+[i]+"')")
                 gifDiv.append(gifLink); 
                 //link adds text address that will be hidden but still accessed via unique id in the copyToClipboard function

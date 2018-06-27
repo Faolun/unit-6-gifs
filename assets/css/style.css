@@ -1,23 +1,50 @@
-body{
-	color: black;
-}
 * {
 	box-sizing: border-box;
 }
+
+body{
+    background-color:#36393e;
+	color: #ffffff;
+}
+
+h1 {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.jumbotron {
+    background-color: #2f3136;
+}
+
 /* img { 
     height: 150px;
     width: 150px;
 } */
+
 .btn {
-    /* adding spacing between each button*/
     margin: 5px;
-    background-color: #999999;
-    border-color: #fff;
+    background-color: #7289da;
+
+}
+.welcome{
+    margin-left: 200px;
 }
 .gifDiv{
     float: left;
-    margin: 5px;
-    margin: 3px;
+    padding: 10px;
+    /* margin: 5px; */
+   
+    text-align: center;
+    font-size: 10px;
+    
+}
+.divCol {
+    background-color: #2f3136;
+}
+.addCol {
+    background-color: #23272A;
+}
+
+.link-button {
+    font-size: 14px;
 }
 
 .link-address {
