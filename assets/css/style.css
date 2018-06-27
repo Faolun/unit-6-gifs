@@ -20,3 +20,7 @@ body{
     margin: 3px;
 }
 
+.link-address {
+    display: none;
+}
+

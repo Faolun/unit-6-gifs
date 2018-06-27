@@ -1,9 +1,9 @@
 
 $( document ).ready(function() {
-    // An array of actions, new actions will be pushed into this array;
-    var topics = ["Smug", "Happy", "Sad", "Angry"];
-    // Creating Functions & Methods
-    // Function that displays all gif buttons
+
+    var topics = ["Smug", "Happy", "Sadness", "Anger", "Disgust", "Surprise", "Anticipation", "Disdain", "Fear"];
+    
+    // Function to display all gifs
     function disButtons(){
         $("#buttons-view").empty(); // erasing anything in this div id so that it doesnt duplicate the results
         for (var i = 0; i < topics.length; i++){
@@ -32,11 +32,11 @@ $( document ).ready(function() {
     // Function that displays all of the gifs
     function displayGifs(){
         var reaction = $(this).attr("data-name");
-        var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + reaction + "&api_key=dc6zaTOxFJmzC&limit=20";
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=M7AnYPW2jbCCjJg8ILD1B7gkbTBWZgxB&q=" + reaction + "&limit=25&offset=0&rating=R&lang=en";
         console.log(queryURL); // displays the constructed url
         $.ajax({
             url: queryURL,
-            method: 'GET'
+            method: "GET"
         })
         .done(function(response) {
             console.log(response); // console test to make sure something returns
@@ -47,22 +47,35 @@ $( document ).ready(function() {
             }
             for (var i=0; i<results.length; i++){
     
-                var gifDiv = $("<div>"); //div for the gifs to go inside
+                var gifDiv = $("<div>"); //div for the gifs
                 gifDiv.addClass("gifDiv");
-                // pulling rating of gif
-                var gifRating = $("<p>").text("Rating: " + results[i].rating);
-                gifDiv.append(gifRating);
-                // pulling gif
+                // pull gif
                 var gifImage = $("<img>");
-                gifImage.attr("src", results[i].images.fixed_height_small_still.url); // still image stored into src of image
-                gifImage.attr("data-still",results[i].images.fixed_height_small_still.url); // still image
-                gifImage.attr("data-animate",results[i].images.fixed_height_small.url); // animated image
-                gifImage.attr("data-state", "still"); // set the image state
+                gifImage.attr("src", results[i].images.fixed_height_small_still.url); // still image
+                gifImage.attr("data-still",results[i].images.fixed_height_small_still.url); // still state
+                gifImage.attr("data-animate",results[i].images.fixed_height_small.url); // animated state
+                gifImage.attr("data-state", "still"); //image state
                 gifImage.addClass("image");
                 gifDiv.append(gifImage);
-                // pulling still image of gif
-                // adding div of gifs to gifs div
+                // pulling rating
+                var gifRating = $("<p>").text("Rating: " + results[i].rating);
+                gifDiv.append(gifRating);
+                //link adds button
+                var gifLink = $("<button>").html("Copy Link");               
+                gifLink.addClass("link-button");
+                gifLink.attr("onclick", "copyToClipboard('#bitAdd"+[i]+"')")
+                gifDiv.append(gifLink); 
+                //link adds text address that will be hidden but still accessed via unique id in the copyToClipboard function
+                var gifBitAddress = $("<p>").text(results[i].bitly_url);
+                gifBitAddress.addClass("link-address");
+                gifBitAddress.attr("id","bitAdd"+[i])
+                gifDiv.append(gifBitAddress);
+
+                //add to div
+                
                 $("#gifs").prepend(gifDiv);
+
+                
             }
         });
     }
@@ -72,13 +85,22 @@ $( document ).ready(function() {
     // Event Listeners
     $(document).on("click", ".reaction", displayGifs);
     $(document).on("click", ".image", function(){
-        var state = $(this).attr('data-state');
-        if ( state == 'still'){
-            $(this).attr('src', $(this).data('animate'));
-            $(this).attr('data-state', 'animate');
+        var state = $(this).attr("data-state");
+        if ( state == "still"){
+            $(this).attr("src", $(this).data("animate"));
+            $(this).attr("data-state", "animate");
         }else{
-            $(this).attr('src', $(this).data('still'));
-            $(this).attr('data-state', 'still');
+            $(this).attr("src", $(this).data("still"));
+            $(this).attr("data-state", "still");
         }
     });
+    // $(document).on("click", ".link-button", copyToClipboard());
     });
+
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+      }
